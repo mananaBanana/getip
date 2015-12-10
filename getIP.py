@@ -23,19 +23,18 @@ try:
     ip = ip_re.search(htmldata)
 
     if ip:
-        print ip.group(0)
-        msg = MIMEText(ip.group(0))
+        print(ip.group(0))
+        msg = MIMEText(str(ip.group(0)))
         msg['Subject'] = "IP"
-        #change this to read from file
-        msg['From'] = "adwait.d10@gmail.com"
+        msg['From'] = username
         msg['To'] = msg['From']
 
         server = smtp.SMTP('smtp.gmail.com:587')
         server.starttls()
         server.login(username, password)
-        server.sendmail(msg['From'], msg['To'],str(ip.group(0)))
+        server.sendmail(msg['From'], msg['To'], msg.as_string())
         server.quit()
 
 except Exception, e:
     print e
-    print("Can't connect to internet")
+    print("Can't connect to internet\n")
