@@ -1,10 +1,14 @@
+from os import path
+import sys
 import urllib
 import re
 import smtplib as smtp
 from email.mime.text import MIMEText
 
+script_dir = path.dirname(__file__) # Directory of the script
+userFile_name = "id" # Name of the file where user credentials are stored
 try:
-    userFile = open('id', 'r')
+    userFile = open(path.join(script_dir, userFile_name), 'r')
 except:
     print("Can't open file, exit\n")
     sys.exit(-1)
@@ -37,4 +41,3 @@ try:
 
 except Exception, e:
     print e
-    print("Can't connect to internet\n")
