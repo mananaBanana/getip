@@ -9,6 +9,7 @@ from email.mime.text import MIMEText
 script_dir = path.dirname(__file__) # Directory of the script
 userFname = "id" # Name of the file where user credentials are stored
 ipFname = "ipaddr"
+force_email = 1 #send email even if lastip is same as current ip
 try:
     userFile = open(path.join(script_dir, userFname), 'r')
     ipFile = open(path.join(script_dir, ipFname), 'r+')
@@ -32,7 +33,7 @@ try:
     ip = ip_re.search(htmldata)
 
     if ip:
-        if lastIP == ip.group(0):
+        if (lastIP == ip.group(0)) and not(force_email):
             sys.exit(0)
         else:
             print(ip.group(0))
