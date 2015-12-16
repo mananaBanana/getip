@@ -25,7 +25,6 @@ lastIP = ipFile.readline().rstrip('\n')
 #Regular expression for matching *.*.*.*
 ip_re = re.compile("\d{1,3}\.\d{1,3}\.\d{1,3}.\d{1,3}") 
 try:
-
     #Search duckduckgo.com for ip and fetch the instant answer
     sock = urllib.urlopen("https://duckduckgo.com/?q=my+ip&ia=answer")
 
@@ -37,6 +36,7 @@ try:
             sys.exit(0)
         else:
             print(ip.group(0))
+
             msg = MIMEText(str(ip.group(0)))
             msg['Subject'] = "IP"
             msg['From'] = username
@@ -52,11 +52,11 @@ try:
             ipFile.write(str(ip.group(0)))
             ipFile.truncate()
             ipFile.close()
+            userFile.close()
 
 except Exception, e:
     system("nmcli dev disconnect iface wlan0")
-    system("nmcli con up id" + str(netid)) #Try to take network name from file
+    system("nmcli con up id " + str(netid)) 
     userFile.close()
     ipFile.close()
-
     print e
